@@ -1,2 +1,0 @@
-[console_scripts]
-pyqtgraph_basics = pyqtgraph_basics.main:main
