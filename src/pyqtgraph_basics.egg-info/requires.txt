@@ -1,0 +1,7 @@
+numpy
+pyside6
+pyqtgraph
+
+[dev]
+pytest
+pre-commit>=4.5.1

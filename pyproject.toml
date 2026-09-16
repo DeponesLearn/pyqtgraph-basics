@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyqtgraph-basics"
+version = "0.1.0"  # Starter version
+description = ""
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name="Berk Acunas", email="info@deponessoft.com" }
+]
+license = { text = "GPL-3.0" }
+dependencies = [
+    "numpy",
+    "pyside6",
+    "pyqtgraph"
+]
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pre-commit>=4.5.1",
+]
+[project.urls]
+"Homepage" = "https://github.com/DeponesLearn/pyqtgraph-basics"
+"Bug Tracker" = "https://github.com/DeponesLearn/pyqtgraph-basics/issues"
+
+[project.scripts]
+pyqtgraph_basics = "pyqtgraph_basics.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+]
+pythonpath = [
+    "src"
+]
