@@ -1,0 +1,52 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {   // Python Debugger: Current File
+            "name":"Python Debugger: Current File",
+            "type":"debugpy",
+            "request":"launch",
+            "program":"${file}",
+            "console":"integratedTerminal",
+            "justMyCode": true
+        },
+        {   // Python Debugger: Current File with Args
+            "name":"Python Debugger: Current File with Args",
+            "type":"debugpy",
+            "request":"launch",
+            "program":"${file}",
+            "console":"integratedTerminal",
+            "args": [
+            ]
+        },
+        {   // Debug: Cache-Flow Module
+            "name": "Debug: Cache-Flow Module",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "cache_flow.main",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src"
+            },
+            "args": [
+
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {   // Debug Tests (Pytest - Current File)
+            "name": "Debug Tests (Pytest - Current File)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": [
+                "-s",
+                "-v",
+                "${file}"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src"
+            }
+        }
+    ]
+}
