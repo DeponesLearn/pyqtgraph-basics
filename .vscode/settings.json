@@ -1,0 +1,23 @@
+{
+  "FSharp.suggestGitignore": false,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": true,
+    "markdown": false,
+    "scminput": false
+  },
+  "git.autofetch": true,
+  "git.autofetchPeriod": 180,
+  "terminal.integrated.gpuAcceleration": "off",
+  "python.languageServer": "Pylance",
+
+  "python.analysis.extraPaths": ["/home/valjean/GitHub/DeponesLearn/pyqtgraph-basics/.venv/Lib/site-packages"],
+  "python.analysis.autoSearchPaths": true,
+  "python.analysis.diagnosticSeverityOverrides": { 
+    "reportUndefinedVariable": false
+  },
+ 
+  "python.analysis.typeCheckingMode": "off",
+  "editor.showUnused": true,
+  "python-envs.defaultEnvManager": "ms-python.python:venv"
+}
