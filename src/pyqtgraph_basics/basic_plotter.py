@@ -7,8 +7,43 @@ class TimeAxisItem(pg.AxisItem):
 
     def tickStrings(self, values, scale, spacing):
 
+        if not values:
+            return {}
+        
         # Converts Unix timestamp values into 'HH:MM:SS' strings
         return [time.strftime('%H:%M:%S', time.localtime(local_time)) for local_time in values]
+
+class DateAxisItem(pg.AxisItem):
+
+    def tickStrings(self, values, scale, spacing):
+
+        if not values:
+            return {}
+        
+        # Converts Unix timestamp values into 'HH:MM:SS' strings
+        return [time.strftime('%d-%m-%Y', time.localtime(local_time)) for local_time in values]
+
+class LineChart:
+    
+    def __init__(self, win: pg.GraphicsLayoutWidget, 
+                 axisItems: dict[str, pg.AxisItem] = None, 
+                 title: str = "Line Chart", max_points: int = 150):
+        
+        self.max_points = max_points
+        self.axisItems = axisItems
+
+        self.p = win.addPlot(title=title, axisItems=axisItems)
+        self.p.showGrid(x=True, y=True, alpha=0.3)
+        self.p.setLabel('left', 'Price', color='#ffffff', size='12pt')
+        self.p.setLabel('bottom', 'Time', color='#ffffff', size='12pt')
+
+        self.p.enableAutoRange(axis=pg.ViewBox.XYAxes)
+        
+        self.x_data = [1, 2, 3, 4, 5]
+        self.y_data = [2, 6, 11, -3, 4]
+                
+        self.y_curve = self.p.plot(x=self.x_data, y=self.y_data, pen=pg.mkPen(color=(255, 100, 100), width=1), name="Y Curve")
+    
 
 class LivePlotter:
     
@@ -19,7 +54,7 @@ class LivePlotter:
         self.step_sec = timer_ms / 1000.0
 
         # Main Plot Setup with Custom Time Axis
-        self.p = win.addPlot(title="Live Plotter", axisItems={'bottom': TimeAxisItem(orientation='bottom')})
+        self.p = win.addPlot(title="Live Plotter", axisItems={'bottom': DateAxisItem(orientation='bottom')})
         self.p.showGrid(x=True, y=True, alpha=0.3)
         self.p.setLabel('left', 'Price', color='#ffffff', size='12pt')
         self.p.setLabel('bottom', 'Time', color='#ffffff', size='12pt')

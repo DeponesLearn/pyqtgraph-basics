@@ -1,6 +1,6 @@
 import pyqtgraph as pg
 
-from pyqtgraph_basics.basic_plotter import basic_array_plotting, LivePlotter
+from pyqtgraph_basics.basic_plotter import basic_array_plotting, LivePlotter, LineChart
 
 def main():
     
@@ -16,7 +16,8 @@ def main():
         
     basic_array_plotting(win)
     win.nextRow()
-    live_plotter = LivePlotter(win)
+    # live_plotter = LivePlotter(win)
+    line_chart = LineChart(win)
 
     pg.exec()
 
