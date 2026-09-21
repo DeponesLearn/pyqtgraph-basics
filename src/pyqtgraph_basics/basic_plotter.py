@@ -23,52 +23,56 @@ class DateAxisItem(pg.AxisItem):
         # Converts Unix timestamp values into 'HH:MM:SS' strings
         return [time.strftime('%d-%m-%Y', time.localtime(local_time)) for local_time in values]
 
+import pyqtgraph as pg
+import numpy as np
+
 class LineChart:
-    
-    def __init__(self, win: pg.GraphicsLayoutWidget, 
-                 axisItems: dict[str, pg.AxisItem] = None, 
-                 title: str = "Line Chart", max_points: int = 150):
+    def __init__(self, axisItems: dict[str, pg.AxisItem] = None, title: str = "Line Chart", max_points: int = 150):
         
         self.max_points = max_points
         self.axisItems = axisItems
 
-        self.p = win.addPlot(title=title, axisItems=axisItems)
-        self.p.showGrid(x=True, y=True, alpha=0.3)
-        self.p.setLabel('left', 'Price', color='#ffffff', size='12pt')
-        self.p.setLabel('bottom', 'Time', color='#ffffff', size='12pt')
+        self.plot_item = pg.PlotItem(title=title)
+        self.plot_item.showGrid(x=True, y=True, alpha=0.3)
+        self.plot_item.setLabel('left', 'Price', color='#ffffff', size='12pt')
+        self.plot_item.setLabel('bottom', 'Time', color='#ffffff', size='12pt')
 
-        self.p.enableAutoRange(axis=pg.ViewBox.XYAxes)
+        self.plot_item.enableAutoRange(axis=pg.ViewBox.XYAxes)
         
-        self.x_data = [1, 2, 3, 4, 5]
-        self.y_data = [2, 6, 11, -3, 4]
-                
-        self.y_curve = self.p.plot(x=self.x_data, y=self.y_data, pen=pg.mkPen(color=(255, 100, 100), width=1), name="Y Curve")
+        # Sadece boş bir eğri (curve) nesnesi yaratıp referansını saklıyoruz
+        self.y_curve = self.plot_item.plot(pen=pg.mkPen(color=(255, 100, 100), width=1), name="Y Curve")
+
+    def update_data(self, x_data: np.ndarray | list, y_data: np.ndarray | list) -> None:
+        """
+        Dışarıdan gelen veri setini alır ve grafiği günceller.
+        """
+        self.y_curve.setData(x=x_data, y=y_data)
     
 
 class LivePlotter:
     
-    def __init__(self, win: pg.GraphicsLayoutWidget, max_points: int = 150, sma_period: int = 20, timer_ms: int = 1000):
+    def __init__(self, max_points: int = 150, sma_period: int = 20, timer_ms: int = 1000):
 
         self.max_points = max_points
         self.sma_period = sma_period
         self.step_sec = timer_ms / 1000.0
 
         # Main Plot Setup with Custom Time Axis
-        self.p = win.addPlot(title="Live Plotter", axisItems={'bottom': DateAxisItem(orientation='bottom')})
-        self.p.showGrid(x=True, y=True, alpha=0.3)
-        self.p.setLabel('left', 'Price', color='#ffffff', size='12pt')
-        self.p.setLabel('bottom', 'Time', color='#ffffff', size='12pt')
+        self.plot_item = pg.PlotItem(title="Live Plotter", axisItems={'bottom': DateAxisItem(orientation='bottom')})
+        self.plot_item.showGrid(x=True, y=True, alpha=0.3)
+        self.plot_item.setLabel('left', 'Price', color='#ffffff', size='12pt')
+        self.plot_item.setLabel('bottom', 'Time', color='#ffffff', size='12pt')
         
         # UI Performance: Enable automatic tracking instead of manual X/Y range.
-        self.p.enableAutoRange(axis=pg.ViewBox.XYAxes)
+        self.plot_item.enableAutoRange(axis=pg.ViewBox.XYAxes)
 
         current_time = time.time()
         self.x_data = np.linspace(current_time - (self.max_points * self.step_sec), current_time, self.max_points)
         self.y_data = np.zeros(self.max_points)
 
-        # 3. Curve Visual Overlays
-        self.price_curve = self.p.plot(pen=pg.mkPen(color=(255, 100, 100), width=1), name="Raw Price")
-        self.sma_curve = self.p.plot(pen=pg.mkPen(color=(240, 230, 140), width=1, style=QtCore.Qt.PenStyle.DashLine), 
+        # Curve Visual Overlays
+        self.price_curve = self.plot_item.plot(pen=pg.mkPen(color=(255, 100, 100), width=1), name="Raw Price")
+        self.sma_curve = self.plot_item.plot(pen=pg.mkPen(color=(240, 230, 140), width=1, style=QtCore.Qt.PenStyle.DashLine), 
                                      name=f"SMA ({self.sma_period})")
 
         # 4. Asynchronous Animation Engine Setup
@@ -96,17 +100,19 @@ class LivePlotter:
         self.price_curve.setData(x=self.x_data, y=self.y_data)
         self.sma_curve.setData(x=self.x_data, y=sma_padded)
 
-def basic_array_plotting(win: pg.GraphicsLayoutWidget):
+def basic_array_plotting(title: str = '') -> pg.PlotItem:
 
-    p = win.addPlot(title="Basic array")
-    p.setLabel('left', 'Price', color='#ffffff', size='12pt')
-    p.setLabel('bottom', 'Time', color='#ffffff', size='12pt')
+    plot_item = pg.PlotItem(title=title)
+    plot_item.setLabel('left', 'Price', color='#ffffff', size='12pt')
+    plot_item.setLabel('bottom', 'Time', color='#ffffff', size='12pt')
 
-    p.setYRange(-5, 5, padding=0)
-    p.setXRange(0, 100, padding=0)
+    plot_item.setYRange(-5, 5, padding=0)
+    plot_item.setXRange(0, 100, padding=0)
 
-    p.showGrid(x=True, y=True, alpha=0.9)
-    p.plot(np.random.normal(size=100), pen=pg.mkPen(color=(255, 100, 100), width=1))    
+    plot_item.showGrid(x=True, y=True, alpha=0.9)
+    plot_item.plot(np.random.normal(size=100), pen=pg.mkPen(color=(255, 100, 100), width=1))    
+    
+    return plot_item
     
 def live_basic_array_plotting(win: pg.GraphicsLayoutWidget):
     
