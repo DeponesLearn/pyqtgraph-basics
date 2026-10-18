@@ -1,4 +1,5 @@
 from collections import namedtuple
+from typing import List
 
 import pyqtgraph as pg
 
@@ -56,6 +57,19 @@ class PlotService:
         self.btc_chart_item = CandlestickChartWidget(title="BTC/USD", data=data)
         # Extract the exposed pointer and mount it to the physical layout
         self.win.addItem(self.btc_chart_item.plot_item)
+
+    def add_bar_graph(self, title: str = ""):
+        
+        y1 = [5, 5, 7, 10, 3, 8, 9, 1, 6, 2]
+        x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        
+        plot_item = pg.PlotItem(title=title)
+        
+        bargraph = pg.BarGraphItem(x=x, height=y1, width=0.6, brush='g')
+        
+        plot_item.addItem(bargraph)
+        
+        self.win.addItem(plot_item)
 
     def add_row(self):
         

@@ -12,26 +12,22 @@ class GraphApp(QMainWindow):
         
         self.setWindowTitle("Yıllara Göre Aylık İşlem Sayıları")
         self.setGeometry(100, 100, 900, 650)
+
+        self.data = {   "2024": {
+                            "basarili": [10, 12,  8, 15, 11,  9, 14, 13, 10,  8, 12, 11],
+                            "hatali":   [10, 12,  8, 15, 11,  9, 14, 13, 10,  8, 12, 11]
+                        },
+                        "2025": {
+                            "basarili": [8,  11,  9,  7, 12, 10,  8, 11,  6,   9,  11,  13],
+                            "hatali":   [8,  11,  9,  7, 12, 10,  8, 11,  6,   9,  11,  13]
+                        },
+                        "2026": {
+                            "basarili": [5,   7,  6,   8,   5,   9,   7,   6,   8,   5,   4,   6],
+                            "hatali":   [5,   7,  6,   8,   5,   9,   7,   6,   8,   5,   4,   6]
+                        }
+                    }
         
-        # 1. Sahte Veri Seti Oluşturma (Son 3 Yıl İçin)
-        # Her yıl için 12 ay var ve her ay için 2 farklı veri (Başarılı, Hatalı)
-        self.data = {
-            "2024": {
-                "basarili": [10, 12,  8, 15, 11,  9, 14, 13, 10,  8, 12, 11],
-                "hatali":   [10, 12,  8, 15, 11,  9, 14, 13, 10,  8, 12, 11]
-            },
-            "2025": {
-                "basarili": [],
-                "hatali":   [8,  11,  9,  7, 12, 10,  8, 11,  6,   9,  11,  13]
-            },
-            "2026": {
-                "basarili": [],
-                "hatali":   [5,   7,  6,   8,   5,   9,   7,   6,   8,   5,   4,   6]
-            }
-        }
-        
-        self.months = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", 
-                      "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"]
+        self.months = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"]
         
         # 2. Arayüz Elemanlarının Oluşturulması
         ana_widget = QWidget()

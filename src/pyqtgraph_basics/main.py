@@ -1,4 +1,4 @@
-from pyqtgraph_basics.plotting_service import PlotService
+from pyqtgraph_basics.plotting_service import PlotService, Size, Rgb
 
 def main():
     
@@ -9,6 +9,9 @@ def main():
     plot_service.add_row()
     plot_service.add_line_chart('Line Chart')
     plot_service.add_candle_stick_chart('Candlestick Chart')
+    plot_service.add_row()
+    plot_service.add_bar_graph()
+
     plot_service.exec()
 
 if __name__ == '__main__':

@@ -1,23 +1,22 @@
 {
-  "FSharp.suggestGitignore": false,
+  "explorer.autoReveal": false,
+  "debug.openDebug": "neverOpen",
+  "python.analysis.ignoredPackages": [ "pyqtgraph" , "pyqtgraph.*"],
   "github.copilot.enable": {
-    "*": true,
-    "plaintext": true,
-    "markdown": false,
-    "scminput": false
+    "*": false,
   },
   "git.autofetch": true,
   "git.autofetchPeriod": 180,
   "terminal.integrated.gpuAcceleration": "off",
-  "python.languageServer": "Pylance",
+  // "python.languageServer": "Pylance",
 
-  "python.analysis.extraPaths": ["/home/valjean/GitHub/DeponesLearn/pyqtgraph-basics/.venv/Lib/site-packages"],
-  "python.analysis.autoSearchPaths": true,
-  "python.analysis.diagnosticSeverityOverrides": { 
-    "reportUndefinedVariable": false
-  },
+  // "python.analysis.extraPaths": ["/home/valjean/GitHub/DeponesLearn/pyqtgraph-basics/.venv/Lib/site-packages"],
+  // "python.analysis.autoSearchPaths": true,
+  // "python.analysis.diagnosticSeverityOverrides": { 
+  //   "reportUndefinedVariable": false
+  // },
  
-  "python.analysis.typeCheckingMode": "off",
-  "editor.showUnused": true,
-  "python-envs.defaultEnvManager": "ms-python.python:venv"
+  // "python.analysis.typeCheckingMode": "off",
+  // "editor.showUnused": true,
+  // "python-envs.defaultEnvManager": "ms-python.python:venv"
 }
